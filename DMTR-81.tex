@@ -1,0 +1,538 @@
+\documentclass[DM,toc]{lsstdoc}
+\usepackage{booktabs}
+
+\title[V16.0 Characterization Report]{Characterization Metric Report: Science Pipelines Version 16.0}
+\author{Simon Krughoff and Michael Wood-Vasey}
+\date{2018-06-26}
+
+\setDocRef{DMTR-81}
+
+\setDocAbstract{%
+This brief report describes measurements of interest that were carried out for release v16.0 of the Science Pipeline.
+
+In short, the astrometric performance is excellent in comparison to both the per cycle ramps as well as the design level KPMs. The photometric performance is not as good. The inclusion of \texttt{jointcal} in the processing in future cycles will improve photometric performance. Current reprocessing of HSC data using a precursor to \texttt{jointcal} called \texttt{meas\_mosaic} shows significant improvement over single epoch processing.
+
+
+The report for the previous version can be found in \citeds{DMTR-62}.
+}
+
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\begin{document}
+\maketitle
+
+Measured using \href{https://github.com/lsst/validation_data_hsc}{validation\_data\_hsc}, which consists of 8 HSC engineering images: 2 \emph{r}-band, 4 \emph{i}'-band, and 2 \emph{y}-band. Measurements were made on individual, separately-processed, single-frame images: Jointcal and/or meas\_mosaic were not run. For comparison, we provide the \SRD required ``design'' value of each metric as defined in the Science Requirements Document \citedsp{LPM-17}, and, where available, the target for this release as defined in the Data Management Development Milestone Roadmap \citedsp{LDM-240}. All values were computed using the examples/runHscTest.sh script in the \href{https://github.com/lsst/validate_drp}{validate\_drp} package.
+
+Some KPMs (AF1, AD1) involve thresholds that are different for ``design'', ``minimum'', and ``stretch'' specifications. Thus comparing one of these metrics against a given target number is a two-level process. Both the threshold used in the calculation is dependent on the specifications, and the requirement on the computed number is dependent on the specifications.
+
+The metrics in this report have all been computed relative to the ``design'' thresholds. The values of these KPMs would be different if computed against different thresholds.
+
+Note also that the photometric performance of the pipelines in the \emph{y}-band is an under estimate of expected delivered performance.  For these tests, the \emph{y}-band data was calibrated with \emph{z}-band photometry.  This is due to the lack of a reference catalog containing \emph{y}-band information at this time. We recognize that the bandpass mismatch is certainly not the only source of scatter in the \emph{y}-band photometry. These metric measurements are still worth noting in this report as a historical benchmark to track relative performance.
+
+The per cycle target numbers come from the ``KPMs'' sheet of \href{http://ls.st/LDM-240}{LDM-240}.
+
+\section{Photometric Performance}\label{photometric-performance}
+
+\emph{Submitted by Simon Krughoff and Michael Wood-Vasey}
+
+procCalRep corresponds to requirement OSS-REQ-0275 (defined in
+\citeds{LSE-30}). All other photometric performance
+metrics follow LSS-REQ-0093 (\citeds{LSE-29}) and
+\citeds{LPM-17} table 14.
+
+\begin{longtable}[]{@{}llllll@{}}
+\toprule
+\begin{minipage}[b]{0.14\columnwidth}\raggedright\strut
+Metric\strut
+\end{minipage} & \begin{minipage}[b]{0.06\columnwidth}\raggedright\strut
+Unit\strut
+\end{minipage} & \begin{minipage}[b]{0.17\columnwidth}\raggedright\strut
+SRD Requirement--Design\strut
+\end{minipage} & \begin{minipage}[b]{0.17\columnwidth}\raggedright\strut
+Release 16 Target\strut
+\end{minipage} & \begin{minipage}[b]{0.12\columnwidth}\raggedright\strut
+Value\strut
+\end{minipage} & \begin{minipage}[b]{0.17\columnwidth}\raggedright\strut
+Comments\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+procCalRep\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+mmag\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(\leq 13\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+---\strut
+\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+---\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+Need simulations\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+PA1: \emph{u}\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+mmag\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(\leq 12\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+---\strut
+\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+---\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+No data\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+PA1: \emph{g}\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+mmag\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(\leq 8\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+---\strut
+\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+---\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+No data\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+PA1: \emph{r}\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+mmag\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(\leq 5\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+8.0\strut
+\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+14.60\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+PA1: \emph{i}\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+mmag\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(\leq 5\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+8.0\strut
+\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+12.00\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+PA1: \emph{z}\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+mmag\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(\leq 12\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+---\strut
+\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+---\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+No data\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+PA1: \emph{y}\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+mmag\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(\leq 12\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+12.0\strut
+\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+25.10\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+PF1: \emph{u}\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+\%\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(\leq 20\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+---\strut
+\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+---\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+No data\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+PF1: \emph{g}\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+\%\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(\leq 20\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+---\strut
+\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+---\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+No data\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+PF1: \emph{r}\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+\%\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(\leq 10\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+10.0\strut
+\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+31.70\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+PF1: \emph{i}\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+\%\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(\leq 10\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+10.0\strut
+\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+26.10\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+PF1: \emph{z}\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+\%\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(\leq 20\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+---\strut
+\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+---\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+No data\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+PF1: \emph{y}\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+\%\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(\leq 20\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+20.0\strut
+\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+37.20\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+PA2: \emph{u}\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+mmag\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(\leq 22.5\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+---\strut
+\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+---\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+No data\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+PA2: \emph{g}\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+mmag\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(\leq 15\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+---\strut
+\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+---\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+No data\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+PA2: \emph{r}\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+mmag\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(\leq 15\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+20.0\strut
+\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+27.20\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+PA2: \emph{i}\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+mmag\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(\leq 15\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+20.0\strut
+\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+25.60\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+PA2: \emph{z}\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+mmag\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(\leq 22.5\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+---\strut
+\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+---\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+No data\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+PA2: \emph{y}\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+mmag\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(\leq 22.5\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+20.0\strut
+\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+44.60\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+\section{Astrometric Performance}\label{astrometric-performance}
+
+\emph{Submitted by Simon Krughoff and Michael Wood-Vasey}
+
+The following metrics are defined following LSR-REQ-0094
+\citedsp{LSE-29} and \citeds{LPM-17} table 18.
+
+\begin{longtable}{L{0.19\columnwidth}L{0.08\columnwidth}L{0.2\columnwidth}R{0.22\columnwidth}R{0.17\columnwidth}}
+\toprule
+Metric &
+Unit &
+SRD Requirement &
+Release 16 Target &
+Value
+\tabularnewline
+\midrule
+\endhead
+AM1: \emph{r} &
+mas &
+\(\leq 20\) &
+30.0 &
+6.66
+\tabularnewline
+AM1: \emph{i} &
+mas &
+\(\leq 20\) &
+30.0 &
+9.08
+\tabularnewline
+AM1: \emph{y} &
+mas &
+\(\leq 20\) &
+30.0 &
+12.45
+\tabularnewline
+AF1: \emph{r} &
+\% &
+\(\leq 10\) &
+10.0 &
+2.64
+\tabularnewline
+AF1: \emph{i} &
+\% &
+\(\leq 10\) &
+10.0 &
+2.16
+\tabularnewline
+AF1: \emph{y} &
+\% &
+\(\leq 10\) &
+10.0 &
+10.70
+\tabularnewline
+AD1: \emph{r} &
+mas &
+\(\leq 20\) &
+20.0 &
+10.90
+\tabularnewline
+AD1: \emph{i} &
+mas &
+\(\leq 20\) &
+20.0 &
+10.90
+\tabularnewline
+AD1: \emph{y} &
+mas &
+\(\leq 20\) &
+20.0 &
+20.80
+\tabularnewline
+AM2: \emph{r} &
+mas &
+\(\leq 10\) &
+40.0 &
+6.46
+\tabularnewline
+AM2: \emph{i} &
+mas &
+\(\leq 10\) &
+40.0 &
+9.90
+\tabularnewline
+AM2: \emph{y} &
+mas &
+\(\leq 10\) &
+40.0 &
+13.20
+\tabularnewline
+AF2: \emph{r} &
+\% &
+\(\leq 10\) &
+10.0 &
+2.24
+\tabularnewline
+AF2: \emph{i} &
+\% &
+\(\leq 10\) &
+10.0 &
+2.26
+\tabularnewline
+AF2: \emph{y} &
+\% &
+\(\leq 10\) &
+10.0 &
+11.10
+\tabularnewline
+AD2: \emph{r} &
+mas &
+\(\leq 20\) &
+20.0 &
+10.60
+\tabularnewline
+AD2: \emph{i} &
+mas &
+\(\leq 20\) &
+20.0 &
+11.00
+\tabularnewline
+AD2: \emph{y} &
+mas &
+\(\leq 20\) &
+20.0 &
+21.30
+\tabularnewline
+\bottomrule
+\end{longtable}
+
+\section{Ellipticity Correlations}\label{ellipticity-correlations}
+
+\emph{Submitted by Simon Krughoff and Michael Wood-Vasey}
+
+The following metrics are defined following LSR-REQ-0097
+\citedsp{LSE-29} and \citeds{LPM-17} table 27.
+
+\begin{longtable}[]{@{}lllll@{}}
+\toprule
+\begin{minipage}[b]{0.13\columnwidth}\raggedright\strut
+Metric\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+Unit\strut
+\end{minipage} & \begin{minipage}[b]{0.24\columnwidth}\raggedright\strut
+SRD Requirement\strut
+\end{minipage} & \begin{minipage}[b]{0.21\columnwidth}\raggedright\strut
+Release 16 Target\strut
+\end{minipage} & \begin{minipage}[b]{0.22\columnwidth}\raggedright\strut
+Value\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
+TE1: \emph{r}\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+---\strut
+\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
+\(\leq 3\times 10^{-5}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+\(\leq 3\times 10^{-5}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright\strut
+\(3.37\times 10^{-6}\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
+TE1: \emph{i}\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+---\strut
+\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
+\(\leq 3\times 10^{-5}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+\(\leq 3\times 10^{-5}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright\strut
+\(1.19\times 10^{-6}\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
+TE1: \emph{y}\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+---\strut
+\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
+\(\leq 3\times 10^{-5}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+\(\leq 3\times 10^{-5}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright\strut
+\(5.92\times 10^{-5}\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
+TE2: \emph{r}\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+---\strut
+\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
+\(\leq 3\times 10^{-7}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+\(\leq 3\times 10^{-7}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright\strut
+\(8.30\times 10^{-8}\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
+TE2: \emph{i}\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+---\strut
+\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
+\(\leq 3\times 10^{-7}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+\(\leq 3\times 10^{-7}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright\strut
+\(1.27\times 10^{-7}\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
+TE2: \emph{y}\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+---\strut
+\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
+\(\leq 3\times 10^{-7}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+\(\leq 3\times 10^{-7}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright\strut
+\(6.82\times 10^{-7}\)\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+\section{Computational Performance}\label{computational-performance}
+
+Computational performance metrics were not re-measured for this release.
+We expect no significant changes relative to the
+report on version 12 \citedsp{DMTR-15}.
+
+
+\bibliography{lsst}
+\end{document}
